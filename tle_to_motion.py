@@ -210,10 +210,12 @@ def propagate(line1, line2, start_dt, end_dt, rate_hz):
 # Output
 # ---------------------------------------------------------------------------
 
-def write_csv(positions, filepath):
+def write_csv(positions, filepath, rate_hz):
+    interval = 1.0 / rate_hz
     with open(filepath, "w") as f:
-        for x, y, z in positions:
-            f.write(f"{x:.3f},{y:.3f},{z:.3f}\n")
+        for i, (x, y, z) in enumerate(positions):
+            t = i * interval
+            f.write(f"{t:.1f},{x:.3f},{y:.3f},{z:.3f}\n")
     print(f"  Written: {filepath}  ({len(positions)} lines)")
 
 
@@ -272,7 +274,7 @@ def main():
         safe_start = args.start.replace("/", "").replace(",", "_").replace(":", "")
         outfile = f"{safe_id}_{safe_start}.csv"
 
-    write_csv(positions, outfile)
+    write_csv(positions, outfile, args.rate)
 
     print(f"\nDone. Use with gps-sim:")
     print(f"  ./gps-sim -e <brdc_file> -m {outfile} -s {args.start} -d {int(duration)} -I -r plutosdr -N 192.168.2.1 -g -40\n")
@@ -280,4 +282,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
