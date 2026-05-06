@@ -16,3 +16,8 @@ ls -lrt
 LAT: 35.27N
 LON: 137.03E
 
+Test with stationary coordinates at 17000M:
+Test 1: no FIX
+
+Test with stationary coordinates at 19000M:
+
