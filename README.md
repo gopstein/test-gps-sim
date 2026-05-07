@@ -19,3 +19,5 @@ LAT: 35.27N
 LON: 137.03E
 
 gpspipe -rt | tee 12500M-test.out | grep GPGGA
+
+cgps --silent
